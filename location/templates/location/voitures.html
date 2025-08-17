@@ -1,0 +1,40 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Voitures à louer</title>
+    <link rel="stylesheet" href="{% static 'location/style.css' %}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="container"> 
+            <nav class="navbar-nav">
+                <a href="/" class="navbar-brand">Ntahojos</a>
+                <ul class="navbar-navi">
+                    <li><a href="{% url 'liste_voitures' %}" class="nav-link">Nos voitures</a></li>
+                    <li><a href="/apprendre" class="nav-link">Reserver</a></li>
+                    <li><a href="/lieux" class="nav-link">A propos</a></li>
+                    <li><a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#inscriptionModal">Créer un compte client</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <h1 style="text-align:center;">Nos Voitures Disponibles</h1>
+
+    <div class="voiture-container">
+        {% for voiture in voitures %}
+            <div class="voiture-item">
+                <img src="{{ voiture.image.url }}" alt="{{ voiture.modele }}">
+                <h3>{{ voiture.categorie }}</h3>
+                {% comment %} <p><strong>{{ voiture.modele }}</strong></p> {% endcomment %}
+                <p><strong>{{ voiture.marque }}</strong></p>
+
+            </div>
+        {% endfor %}
+    </div>
+
+</body>
+</html>

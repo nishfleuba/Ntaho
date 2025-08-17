@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inscription Client</title>
+    <link rel="stylesheet" href="{% static 'location/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Bouton pour ouvrir le popup -->
+<div class="text-center mt-5">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inscriptionModal">
+        S'inscrire
+    </button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="inscriptionModal" tabindex="-1" aria-labelledby="inscriptionModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="post">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title" id="inscriptionModalLabel">Formulaire d'inscription</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+        </div>
+        <div class="modal-body">
+            <h5>Informations de connexion</h5>
+                {{ user_form.as_p }}
+
+                <h5>Informations client</h5>
+                {{ client_form.as_p }}
+
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">S'inscrire</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Ntahojos - Location{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'location/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    
+    <header class="navbar">
+        <div class="container"> 
+            <nav class="navbar-nav">
+                <a href="/" class="navbar-brand">Ntahojos</a>
+                <ul class="navbar-navi">
+                    <li><a href="{% url 'liste_voitures' %}" class="nav-link">Nos voitures</a></li>
+                    <a href="{% url 'reserver_voiture' voiture.id %}" class="btn btn-primary">Reserver</a>
+
+                    <li><a href="{% url 'apropos' %}" class="nav-link">À propos</a></li>
+
+                    <li><a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#inscriptionModal">Créer un compte client</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="pages1">
+        <div class="right">  <div class="content">
+        <h2>Bienvenue chez Ntahojos</h2>
+        <p>
+            Louez nos véhicules en toute confiance.<br>
+            Votre satisfaction est notre priorité.<br>
+            Des voitures modernes, sûres et accessibles pour tous vos trajets.
+        </p>
+        <p>
+            🚗 Confort & Sécurité<br>
+            🌍 Partout au Burundi<br>
+            💡 Un service rapide et fiable
+        </p>
+        </div>
+    </div>
+    <div class="left">
+    <h2>À propos de Ntahojos</h2>
+    <p>
+        Chez <strong>Ntahojos Location</strong>, nous croyons que chaque trajet doit être une
+        expérience agréable et sans souci. Depuis notre création, notre objectif est simple :
+        offrir à nos clients des véhicules fiables, modernes et adaptés à tous leurs besoins.
+    </p>
+    <p>
+        Que ce soit pour un voyage d’affaires, une sortie en famille ou un déplacement rapide,
+        nous mettons à votre disposition une flotte variée et bien entretenue, afin que vous rouliez
+        en toute sécurité et dans le confort.
+    </p>
+    <p>
+        Notre équipe passionnée s’engage à fournir un service rapide, transparent et de confiance,
+        parce que votre satisfaction est notre priorité.
+    </p>
+    </div>
+
+    </div>
+
+    <section class="voiture-section">
+        <h2 class="section-title">Nos Voitures Populaires</h2>
+        <div class="voiture-scroll-container">
+            {% for voiture in voitures %}
+                <div class="voiture-card">
+                    <img src="{{ voiture.image.url }}" alt="{{ voiture.marque }}">
+                    <div class="voiture-info">
+                        <h4>{{ voiture.marque }}</h4>
+                        <p>{{ voiture.modele }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    
+    <div class="modal fade" id="inscriptionModal" tabindex="-1" aria-labelledby="inscriptionModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form method="post">
+            {% csrf_token %}
+            <div class="modal-header">
+              <h5 class="modal-title" id="inscriptionModalLabel">Créer un compte client</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body">
+                <h5>Informations de connexion</h5>
+                {{ user_form.as_p }}
+
+                <h5>Informations client</h5>
+                {{ client_form.as_p }}
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success">S'inscrire</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    {% if form.errors %}
+    <script>
+        const modal = new bootstrap.Modal(document.getElementById('inscriptionModal'));
+        modal.show();
+    </script>
+    {% endif %}
+</body>
+</html>

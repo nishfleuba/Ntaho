@@ -1,0 +1,45 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À propos - Ntahojos</title>
+    <link rel="stylesheet" href="{% static 'location/style.css' %}">
+</head>
+<body>
+    <!-- Réutiliser ton header -->
+    <header class="navbar">
+        <div class="container"> 
+            <nav class="navbar-nav">
+                <a href="/" class="navbar-brand">Ntahojos</a>
+                <ul class="navbar-navi">
+                    <li><a href="{% url 'liste_voitures' %}" class="nav-link">Nos voitures</a></li>
+                    <li><a href="/apprendre" class="nav-link">Réserver</a></li>
+                    <li><a href="{% url 'apropos' %}" class="nav-link active">À propos</a></li>
+                    <li><a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#inscriptionModal">Créer un compte client</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contenu À propos -->
+    <section class="apropos-section">
+        <h2>À propos de Ntahojos</h2>
+        <p>
+            Chez <strong>Ntahojos Location</strong>, nous croyons que chaque trajet doit être une expérience agréable et sans souci. 
+            Depuis notre création, notre objectif est simple : offrir à nos clients des véhicules fiables, modernes et adaptés à tous leurs besoins.
+        </p>
+        <p>
+            Que ce soit pour un voyage d’affaires, une sortie en famille ou un déplacement rapide,
+            nous mettons à votre disposition une flotte variée et bien entretenue,
+            afin que vous rouliez en toute sécurité et dans le confort.
+        </p>
+        <p>
+            Notre équipe passionnée s’engage à fournir un service rapide, transparent et de confiance,
+            parce que votre satisfaction est notre priorité.
+        </p>
+    </section>
+</body>
+</html>

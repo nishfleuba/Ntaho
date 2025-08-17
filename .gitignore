@@ -1,0 +1,16 @@
+# Ignore la base de données
+db.sqlite3
+
+# Ignore les fichiers Python compilés
+__pycache__/
+*.pyc
+
+# Ignore les dossiers médias (uploads utilisateurs)
+media/
+
+# Ignore l’environnement virtuel
+venv/
+.env/
+
+# Ignore VS Code configs
+.vscode/

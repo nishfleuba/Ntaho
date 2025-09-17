@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Mes réservations</h2>
+  <p>Voici la liste de vos réservations :</p>
+
+   {% if user.reservation_set.all %}
+     <ul>
+      {% for reservation in user.reservation_set.all %}
+          <li>
+              Voiture : {{ reservation.voiture.marque }} {{ reservation.voiture.modele }} <br>
+              Date : {{ reservation.date_reservation }}
+          </li>
+      {% endfor %}
+      </ul>
+  {% else %}
+      <p>Aucune réservation trouvée.</p>
+  {% endif %}
+{% endblock %}

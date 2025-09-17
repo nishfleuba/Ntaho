@@ -3,10 +3,21 @@ from .models import *
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
-from .forms import ClientForm,UserForm
+from .forms import ClientForm,UserForm,ReservationForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from .models import Configuration
+
+def detail_voiture(request, voiture_id):
+    voiture = get_object_or_404(Voiture, id=voiture_id)
+    config = Configuration.objects.first()  # tu prends le premier enregistrement
+
+    return render(request, "detail_voiture.html", {
+        "voiture": voiture,
+        "whatsapp_number": config.whatsapp_number if config else "",
+    })
+
 
 def accueil(request):
     voitures = Voiture.objects.all()
@@ -38,7 +49,12 @@ def accueil(request):
 
 def voitures_view(request):
     voitures = Voiture.objects.all()
-    return render(request, 'location/voitures.html', {'voitures': voitures})
+    config = Configuration.objects.first()
+    whatsapp_number = config.whatsapp_number if config else ""
+    return render(request, 'location/voitures.html', {
+        'voitures': voitures,
+        'whatsapp_number': whatsapp_number
+    })
 
 def inscription_client(request):
     if request.method == 'POST':
@@ -69,26 +85,33 @@ def Apropos(request):
 @login_required
 def reserver_voiture(request, voiture_id):
     voiture = get_object_or_404(Voiture, id=voiture_id)
-    client = get_object_or_404(Client, user=request.user)
-    lieux = Lieu.objects.all()  # Pour choisir le lieu de départ et retour
+    if request.method == "POST":
+        form = ReservationForm(request.POST)
+        if form.is_valid():
+            reservation = form.save(commit=False)
+            reservation.client = request.user
+            reservation.voiture = voiture
+            reservation.save()
+            return redirect('mes_reservations')  # tu rediriges vers la page "mes réservations"
+    else:
+        form = ReservationForm()
+    return render(request, 'location/reservation_form.html', {'form': form, 'voiture': voiture})
 
-    if request.method == 'POST':
-        lieu_depart_id = request.POST.get('lieu_depart')
-        lieu_retour_id = request.POST.get('lieu_retour')
-        lieu_depart = get_object_or_404(Lieu, id=lieu_depart_id)
-        lieu_retour = get_object_or_404(Lieu, id=lieu_retour_id)
+@login_required
+def mes_reservations(request):
+    # logiques pour afficher les réservations de l'utilisateur connecté
+    return render(request, "location/mes_reservations.html")
 
-        Reservation.objects.create(
-            client=client,
-            voiture=voiture,
-            lieu_depart=lieu_depart,
-            lieu_retour=lieu_retour,
-            date_reservation=timezone.now(),
-            est_confirmee=False  # ou True si tu veux confirmer immédiatement
-        )
-        return redirect('liste_voitures')  # ou vers une page de confirmation
-
-    return render(request, 'reserver_voiture.html', {
-        'voiture': voiture,
-        'lieux': lieux
-    })
+def connexion(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        user = authenticate(request, username=username, password=password)
+        if user:
+            login(request, user)
+            return redirect("accueil")  # ✅ redirige vers accueil
+        else:
+            return render(request, "connexion.html", {
+                "error": "Nom d'utilisateur ou mot de passe incorrect."
+            })
+    return render(request, "inscription.html")

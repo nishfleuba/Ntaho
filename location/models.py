@@ -3,6 +3,12 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 
+class Configuration(models.Model):
+    whatsapp_number = models.CharField(max_length=20, default="25776929167")
+
+    def __str__(self):
+        return f"WhatsApp : {self.whatsapp_number}"
+
 
 class Client(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -35,15 +41,14 @@ class Voiture(models.Model):
 
 
 class Reservation(models.Model):
-    client = models.ForeignKey(Client, on_delete=models.CASCADE)
-    voiture = models.ForeignKey(Voiture, on_delete=models.PROTECT)
-    lieu_depart = models.ForeignKey(Lieu, on_delete=models.SET_NULL, null=True, related_name='depart')
-    lieu_retour = models.ForeignKey(Lieu, on_delete=models.SET_NULL, null=True, related_name='retour')
-    date_reservation = models.DateTimeField(default=timezone.now)
-    est_confirmee = models.BooleanField(default=False)
+    client = models.ForeignKey(User, on_delete=models.CASCADE)
+    voiture = models.ForeignKey(Voiture, on_delete=models.CASCADE)
+    date_debut = models.DateField(null=True, blank=True)
+    date_fin = models.DateField(null=True, blank=True)
+    statut = models.CharField(max_length=20, default="En attente")
 
     def __str__(self):
-        return f"Réservation de {self.voiture} par {self.client.username}"
+        return f"Réservation {self.voiture} par {self.client}"
 
   
 

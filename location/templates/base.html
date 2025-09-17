@@ -1,0 +1,47 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Ntahojos - Location{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'location/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</head>
+<body>
+
+<!-- Header uniforme -->
+<header class="navbar">
+    <div class="container">
+        <a href="/" class="navbar-brand">Ntahojos</a>
+        <ul class="navbar-navi">
+            <li><a href="{% url 'liste_voitures' %}" class="nav-link">🚗 Nos voitures</a></li>
+            <li><a href="{% url 'apropos' %}" class="nav-link">ℹ️ À propos</a></li>
+            <li>
+                <a href="#" class="nav-link btn-inscription" data-bs-toggle="modal" data-bs-target="#inscriptionModal">
+                    ✍️ Créer un compte
+                </a>
+            </li>
+        </ul>
+    </div>
+</header>
+
+<!-- ✅ Ici le contenu des autres pages -->
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+{% if form.errors %}
+<script>
+    const modal = new bootstrap.Modal(document.getElementById('inscriptionModal'));
+    modal.show();
+</script>
+{% endif %}
+
+</body>
+</html>

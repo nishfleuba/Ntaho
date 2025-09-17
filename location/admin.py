@@ -1,5 +1,22 @@
 from django.contrib import admin
-from .models import Client, Lieu, Voiture, Reservation
+from .models import Client, Lieu, Voiture, Reservation,Configuration
+
+
+admin.site.register(Configuration)
+class ConfigurationAdmin(admin.ModelAdmin):
+    list_display = ('whatsapp_number',)
+    def save_model(self, request, obj, form, change):
+        if obj.whatsapp_number:
+            # garder uniquement les chiffres
+            num = ''.join(filter(str.isdigit, obj.whatsapp_number))
+
+            # enlever les deux premiers 0 si ça commence par 00
+            if num.startswith("00"):
+                num = num[2:]
+
+            obj.whatsapp_number = num
+
+        super().save_model(request, obj, form, change)
 
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
@@ -40,6 +57,6 @@ class VoitureAdmin(admin.ModelAdmin):
 
 @admin.register(Reservation)
 class ReservationAdmin(admin.ModelAdmin):
-    list_display = ('client', 'voiture', 'lieu_depart', 'lieu_retour', 'date_reservation', 'est_confirmee')
-    list_filter = ('est_confirmee',)
+    list_display = ('client', 'voiture', 'date_debut', 'date_fin', 'statut')
+    list_filter = ('statut',)
     search_fields = ('client__username', 'voiture__immatriculation')

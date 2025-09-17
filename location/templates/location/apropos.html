@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -9,37 +8,32 @@
     <link rel="stylesheet" href="{% static 'location/style.css' %}">
 </head>
 <body>
-    <!-- Réutiliser ton header -->
+
+    <!-- Header réutilisé -->
     <header class="navbar">
         <div class="container"> 
-            <nav class="navbar-nav">
-                <a href="/" class="navbar-brand">Ntahojos</a>
-                <ul class="navbar-navi">
-                    <li><a href="{% url 'liste_voitures' %}" class="nav-link">Nos voitures</a></li>
-                    <li><a href="/apprendre" class="nav-link">Réserver</a></li>
-                    <li><a href="{% url 'apropos' %}" class="nav-link active">À propos</a></li>
-                    <li><a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#inscriptionModal">Créer un compte client</a></li>
-                </ul>
-            </nav>
+            <a href="/" class="navbar-brand">Ntahojos</a>
+            <ul class="navbar-navi">
+                <li><a href="{% url 'liste_voitures' %}" class="nav-link">Nos voitures</a></li>
+                <li><a href="/apprendre" class="nav-link">Réserver</a></li>
+                <li><a href="{% url 'apropos' %}" class="nav-link active">À propos</a></li>
+                <li><a href="#" class="nav-link btn-inscription" data-bs-toggle="modal" data-bs-target="#inscriptionModal">Créer un compte client</a></li>
+            </ul>
         </div>
     </header>
 
-    <!-- Contenu À propos -->
+    <!-- Section À propos -->
     <section class="apropos-section">
         <h2>À propos de Ntahojos</h2>
         <p>
-            Chez <strong>Ntahojos Location</strong>, nous croyons que chaque trajet doit être une expérience agréable et sans souci. 
-            Depuis notre création, notre objectif est simple : offrir à nos clients des véhicules fiables, modernes et adaptés à tous leurs besoins.
+            Bienvenue sur Ntahojos ! Nous sommes dédiés à fournir le meilleur service de location de voitures au Burundi. 
+            Notre mission est de rendre la location simple, rapide et fiable pour tous nos clients.
         </p>
         <p>
-            Que ce soit pour un voyage d’affaires, une sortie en famille ou un déplacement rapide,
-            nous mettons à votre disposition une flotte variée et bien entretenue,
-            afin que vous rouliez en toute sécurité et dans le confort.
-        </p>
-        <p>
-            Notre équipe passionnée s’engage à fournir un service rapide, transparent et de confiance,
-            parce que votre satisfaction est notre priorité.
+            Avec une flotte moderne et diversifiée, nous nous assurons que chaque client trouve la voiture idéale pour son besoin.
+            La satisfaction client est notre priorité absolue.
         </p>
     </section>
+
 </body>
 </html>

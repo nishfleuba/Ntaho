@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Réservation{% endblock %}
+
+{% block content %}
+<div class="card shadow p-4">
+    <h2 class="text-center">Voulez-vous?Réserver {{ voiture.marque }} {{ voiture.modele }}</h2>
+    <!-- Affichage de l'image -->
+    {% if voiture.image %}
+        <div class="text-center mb-3">
+            <img src="{{ voiture.image.url }}" alt="{{ voiture.modele }}" style="max-width:300px; height:auto;">
+        </div>
+    {% endif %}
+    <form method="post" class="row g-3">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="col-12 text-center">
+            <button type="submit" class="btn btn-success">Confirmer la réservation</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

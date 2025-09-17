@@ -1,40 +1,42 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Voitures à louer</title>
     <link rel="stylesheet" href="{% static 'location/style.css' %}">
 </head>
 <body>
-    <header class="navbar">
-        <div class="container"> 
-            <nav class="navbar-nav">
-                <a href="/" class="navbar-brand">Ntahojos</a>
-                <ul class="navbar-navi">
-                    <li><a href="{% url 'liste_voitures' %}" class="nav-link">Nos voitures</a></li>
-                    <li><a href="/apprendre" class="nav-link">Reserver</a></li>
-                    <li><a href="/lieux" class="nav-link">A propos</a></li>
-                    <li><a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#inscriptionModal">Créer un compte client</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
 
-    <h1 style="text-align:center;">Nos Voitures Disponibles</h1>
+<!-- Header moderne et aligné de gauche à droite -->
+<header class="navbar">
+    <div class="container">
+        <!-- Logo / Nom du site -->
+        <a href="/" class="navbar-brand">Ntahojos</a>
 
-    <div class="voiture-container">
-        {% for voiture in voitures %}
-            <div class="voiture-item">
-                <img src="{{ voiture.image.url }}" alt="{{ voiture.modele }}">
-                <h3>{{ voiture.categorie }}</h3>
-                {% comment %} <p><strong>{{ voiture.modele }}</strong></p> {% endcomment %}
-                <p><strong>{{ voiture.marque }}</strong></p>
-
-            </div>
-        {% endfor %}
+        <!-- Liens alignés à droite -->
+        <ul class="navbar-navi">
+            {% comment %} <li><a href="#" class="nav-link">Nos voitures</a></li> {% endcomment %}
+            <li><a href="{% url 'apropos' %}" class="nav-link">À propos</a></li>
+            <li><a href="#" class="nav-link btn-inscription" data-bs-toggle="modal" data-bs-target="#inscriptionModal">
+                Créer un compte client
+            </a></li>
+        </ul>
     </div>
+</header>
+
+<h1 style="text-align:center;">Nos Voitures Disponibles</h1>
+
+<div class="voiture-container">
+    {% for voiture in voitures %}
+        <div class="voiture-item">
+            <img src="{{ voiture.image.url }}" alt="{{ voiture.modele }}">
+            <h3>{{ voiture.categorie }}</h3>
+            <p><strong>{{ voiture.marque }}</strong></p>
+        </div>
+    {% endfor %}
+</div>
 
 </body>
 </html>
